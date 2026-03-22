@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ APP_NAME }} | Admin Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <body class="admin-auth"></body>
+    <div class="container">
+
+<!-- NAVBAR -->
+<div class="navbar admin-navbar">
+  <div class="brand brand-horizontal">
+    <img src="{{ url_for('static', filename='images/logo.png') }}"
+     class="logo"
+     alt="QuickBite Logo">
+    <div class="brand-text">
+      <span class="site-name">{{ APP_NAME }}</span>
+      <span class="tagline">{{ TAGLINE }}</span>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE CONTAINER -->
+<div class="container center">
+
+  <div class="card login-card">
+    <h2>🔐 Admin Login</h2>
+
+    <form method="POST">
+      <input type="text" name="username" placeholder="Username" required>
+      <input type="password" name="password" placeholder="Password" required>
+
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+
+</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ APP_NAME }} | Payment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+    <div class="brand-text">
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/cart">Cart</a>
+    <a href="/orders">Orders</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+
+<div class="container">
+
+<div class="payment-layout">
+
+<!-- LEFT SIDE -->
+<div class="payment-card">
+
+<h2>💳 Secure Payment</h2>
+
+<div class="bill-box">
+  <p><b>Food:</b> {{ food }}</p>
+  <p class="amount">₹{{ price }}</p>
+</div>
+
+<form id="payment-form" method="POST" action="/payment_success/{{ food }}/{{ price }}">
+
+<h3>🚚 Delivery Details</h3>
+
+<input type="text" name="address" placeholder="Delivery Address" required>
+<input type="text" name="contact_no" placeholder="Contact Number" required>
+<textarea name="special_message" placeholder="Special instructions"></textarea>
+
+<br>
+
+<!-- 🔵 RAZORPAY -->
+<button type="button" id="pay-btn" class="pay-btn">
+💳 Pay Online (Razorpay)
+</button>
+
+<!-- 🟣 WALLET -->
+<button type="submit"
+        formaction="/wallet_payment/{{ food }}/{{ price }}"
+        class="wallet-btn">
+💰 Pay from Wallet
+</button>
+
+<!-- 🟢 COD -->
+<button type="submit"
+        formaction="/cod_payment/{{ food }}/{{ price }}"
+        class="cod-btn">
+🚚 Cash on Delivery
+</button>
+
+</form>
+
+</div>
+
+
+<!-- RIGHT SUMMARY -->
+<div class="summary-card">
+
+<h3>🧾 Order Summary</h3>
+
+<div class="summary-row">
+  <span>Items Total</span>
+  <span>₹{{ price }}</span>
+</div>
+
+<div class="summary-row">
+  <span>Delivery</span>
+  <span>₹0</span>
+</div>
+
+<div class="summary-row total">
+  <span>Total</span>
+  <span>₹{{ price }}</span>
+</div>
+
+<div class="secure">
+🔒 100% Secure Payment
+</div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- RAZORPAY SCRIPT -->
+<script>
+document.getElementById("pay-btn").onclick = function(e){
+
+var options = {
+    key: "{{ razorpay_key }}",
+    amount: "{{ price * 100 }}",
+    currency: "INR",
+    name: "QuickBite FoodHub",
+    description: "Food Order",
+    order_id: "{{ order_id }}",
+
+    handler: function (response){
+        document.getElementById("payment-form").submit();
+    }
+};
+
+var rzp = new Razorpay(options);
+rzp.open();
+}
+</script>
+
+</body>
+</html>

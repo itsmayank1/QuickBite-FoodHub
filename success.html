@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ APP_NAME }} | Order Confirmed</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" class="logo">
+    <div class="brand-text">
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/orders">My Orders</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+
+<div class="container">
+
+<div class="success-wrapper">
+
+<div class="success-card">
+
+<div class="success-icon">✔</div>
+
+<h1>Payment Successful</h1>
+
+<p class="msg">Your order has been placed successfully</p>
+
+<div class="success-details">
+    <p><b>Transaction ID:</b> {{ txn_id }}</p>
+    <p><b>Payment Mode:</b> {{ mode }}</p>
+</div>
+
+<div class="success-actions">
+    <a href="/" class="btn-primary">🍔 Back to Menu</a>
+    <a href="/orders" class="btn-secondary">📦 View Orders</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- AUTO REDIRECT -->
+<script>
+setTimeout(()=>{
+   window.location.href="/orders";
+},8000);
+</script>
+
+
+</body>
+</html>

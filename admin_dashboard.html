@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">
+    <img src="/static/images/logo.png" class="logo">
+    <div class="brand-text">
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>📊 Admin Analytics</h2>
+
+<div class="analytics-grid">
+
+  <div class="stat-card">
+    <h3>Total Orders</h3>
+    <p>{{ total_orders }}</p>
+  </div>
+
+  <div class="stat-card green">
+    <h3>Delivered</h3>
+    <p>{{ delivered_orders }}</p>
+  </div>
+
+  <div class="stat-card red">
+    <h3>Cancelled</h3>
+    <p>{{ cancelled_orders }}</p>
+  </div>
+
+  <div class="stat-card purple">
+    <h3>Revenue</h3>
+    <p>₹{{ revenue }}</p>
+  </div>
+
+<div class="stat-card orange">
+<h3>Pending</h3>
+<p>{{ pending_orders }}</p>
+</div>
+
+<div class="stat-card purple">
+<h3>Preparing</h3>
+<p>{{ preparing_orders }}</p>
+</div>
+
+<div class="stat-card green">
+<h3>Out for Delivery</h3>
+<p>{{ out_orders }}</p>
+</div>
+
+</div>
+
+
+<!-- ADD FOOD -->
+<div class="card admin-box">
+<h3>Add Food</h3>
+
+<form action="/admin/add_food" method="POST">
+<input name="name" placeholder="Food name">
+<input name="price" placeholder="Price">
+<button>Add</button>
+</form>
+</div>
+
+
+<!-- FOOD LIST -->
+<div class="card admin-box">
+<h3>Food Items</h3>
+
+{% for f in foods %}
+<div class="food-row">
+  {{f[1]}} - ₹{{f[2]}}
+  <a href="/admin/delete/{{f[0]}}" class="delete-btn">Delete</a>
+</div>
+{% endfor %}
+</div>
+
+
+<!-- ORDERS -->
+<h2>🧾 Orders</h2>
+
+{% for o in orders %}
+<div class="order-card">
+
+  <div class="order-header">
+    <h3>Order #{{o[0]}}</h3>
+    <span class="price">₹{{o[3]}}</span>
+  </div>
+
+  <p><b>Food:</b> {{o[2]}}</p>
+  <p><b>Status:</b> {{o[5]}}</p>
+  <p><b>Payment:</b> {{o[4]}}</p>
+
+  <!-- ASSIGN AGENT -->
+  <form action="/admin/assign_agent/{{o[0]}}" method="POST">
+    <select name="agent_id">
+      <option value="">Assign Agent</option>
+      {% for a in agents %}
+      <option value="{{a[0]}}">{{a[1]}}</option>
+      {% endfor %}
+    </select>
+    <button>Assign</button>
+  </form>
+
+  <!-- ACTION BUTTONS -->
+<div class="order-actions">
+
+<a href="/admin/update_status/{{o[0]}}/Preparing" 
+   class="status-btn preparing">Preparing</a>
+
+<a href="/admin/update_status/{{o[0]}}/Out for Delivery" 
+   class="status-btn out">Out</a>
+
+<a href="/admin/mark_delivered/{{o[0]}}" 
+   class="status-btn delivered">Delivered</a>
+
+<a href="/admin/cancel_order/{{o[0]}}" 
+   class="status-btn cancel">Cancel</a>
+
+    {% if o[9] == 'Refund Initiated' %}
+        <a href="/admin/complete_refund/{{o[0]}}" 
+           style="background:green;color:white;padding:6px 10px;border-radius:6px;">
+           💰 Complete Refund
+        </a>
+    {% endif %}
+</div>
+
+</div>
+{% endfor %}
+
+</div>
+
+</body>
+</html>

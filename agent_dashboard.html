@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Delivery Agent Panel</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+.page{
+    max-width:1000px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.order-card{
+    border:1px solid #e5e7eb;
+    border-radius:12px;
+    padding:18px;
+    margin-bottom:18px;
+    background:#fafafa;
+}
+
+.order-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.badge{
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.pending{ background:#e5e7eb; }
+.preparing{ background:#fef3c7; }
+.out{ background:#dbeafe; }
+.delivered{ background:#dcfce7; }
+
+.actions a{
+    margin-right:10px;
+    text-decoration:none;
+    font-weight:600;
+    color:#2563eb;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="brand">
+        <img src="/static/images/logo.png" class="logo">
+        <div class="brand-text">
+            <div class="site-name">{{ APP_NAME }}</div>
+            <div class="tagline">{{ TAGLINE }}</div>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="/login_all">Logout</a>
+    </div>
+</div>
+
+<div class="page">
+<h2>🚚 Delivery Agent Dashboard</h2>
+
+{% for o in orders %}
+<div class="order-card" id="order{{o[0]}}">
+
+    <div class="order-header">
+        <h3>Order #{{ o[0] }}</h3>
+
+        {% if o[2]=='Pending' %}
+            <span class="badge pending">Pending</span>
+        {% elif o[2]=='Preparing' %}
+            <span class="badge preparing">Preparing</span>
+        {% elif o[2]=='Out for Delivery' %}
+            <span class="badge out">Out for Delivery</span>
+        {% elif o[2]=='Delivered' %}
+            <span class="badge delivered">Delivered</span>
+        {% endif %}
+    </div>
+
+    <p><b>Food:</b> {{ o[1] }}</p>
+
+<div class="actions">
+    <a href="/agent/update/{{o[0]}}/Preparing?agent_id={{request.view_args['agent_id']}}">Preparing</a>
+    <a href="/agent/update/{{o[0]}}/Out for Delivery?agent_id={{request.view_args['agent_id']}}">Out</a>
+    <a href="/agent/update/{{o[0]}}/Delivered?agent_id={{request.view_args['agent_id']}}">Delivered</a>
+</div>
+
+</div>
+{% endfor %}
+
+</div>
+</body>
+</html>

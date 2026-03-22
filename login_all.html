@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>QuickBite Login</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+<style>
+
+/* PAGE BG */
+body{
+    background:url('/static/images/food-bg.jpg');
+    background-size:cover;
+    background-position:center;
+    font-family:Segoe UI;
+}
+
+/* NAVBAR SPACE FIX */
+.login-wrapper{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    margin-top:120px;
+}
+
+/* LOGIN CARD */
+.login-box{
+    background:rgba(255,255,255,0.95);
+    padding:28px;
+    border-radius:14px;
+    width:280px;
+    box-shadow:0 12px 30px rgba(0,0,0,0.25);
+    backdrop-filter:blur(6px);
+    transition:0.3s;
+}
+
+.login-box:hover{
+    transform:translateY(-5px);
+}
+
+/* TITLE */
+.login-box h2{
+    text-align:center;
+    margin-bottom:18px;
+}
+
+/* INPUT */
+.login-box input{
+    width:100%;
+    padding:10px;
+    margin-bottom:12px;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+/* BUTTON */
+.login-box button{
+    width:100%;
+    padding:10px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:6px;
+    font-weight:600;
+}
+
+.login-box button:hover{
+    background:#1e40af;
+}
+
+/* SIGNUP TEXT */
+.signup-link{
+    text-align:center;
+    margin-top:10px;
+    font-size:14px;
+}
+
+.signup-link a{
+    color:#2563eb;
+    font-weight:600;
+    text-decoration:none;
+}
+
+.signup-link a:hover{
+    text-decoration:underline;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <div class="brand">
+        <img src="/static/images/logo.png" class="logo">
+        <div class="brand-text">
+            <div class="site-name">{{ APP_NAME }}</div>
+            <div class="tagline">{{ TAGLINE }}</div>
+        </div>
+    </div>
+</div>
+
+
+<div class="login-wrapper">
+
+<!-- USER -->
+<form class="login-box" method="POST">
+<h2>👤 User Login</h2>
+
+<input type="hidden" name="role" value="user">
+<input name="username" placeholder="Email">
+<input name="password" type="password" placeholder="Password">
+
+<button>Login</button>
+
+<div class="signup-link">
+Don't have account? <a href="/signup">Signup</a>
+</div>
+</form>
+
+
+<!-- ADMIN -->
+<form class="login-box" method="POST">
+<h2>🛠 Admin Login</h2>
+
+<input type="hidden" name="role" value="admin">
+<input name="username" placeholder="Username">
+<input name="password" type="password" placeholder="Password">
+
+<button>Login</button>
+
+<div class="signup-link">
+Create admin? <a href="/admin_signup">Signup</a>
+</div>
+</form>
+
+
+<!-- AGENT -->
+<form class="login-box" method="POST">
+<h2>🚚 Agent Login</h2>
+
+<input type="hidden" name="role" value="agent">
+<input name="username" placeholder="Agent Name">
+<input name="password" type="password" placeholder="Password">
+
+<button>Login</button>
+
+<div class="signup-link">
+New agent? <a href="/agent_signup">Signup</a>
+</div>
+</form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+
+  <div class="brand">
+    <!-- LOGO -->
+   <img src="{{ url_for('static', filename='images/logo.png') }}"
+     class="logo"
+     alt="QuickBite Logo">
+
+    <!-- BRAND TEXT -->
+    <div class="brand-text">
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/cart">Cart</a>
+    <a href="/orders">My Orders</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+
+</div>
+
+<!-- ================= PAGE BACKGROUND ================= -->
+<div class="page-bg">
+
+  <!-- ================= CONTENT ================= -->
+  <div class="container">
+
+    <h2>Food Menu</h2>
+
+    <form method="GET" action="/" style="margin-bottom:20px;">
+  <input name="search" placeholder="Search food..."
+         style="padding:10px;width:250px;border-radius:8px;border:1px solid #ccc;">
+  <button style="padding:10px 16px;background:#2563eb;color:white;border:none;border-radius:8px;">
+    Search
+  </button>
+  </form>
+
+    <div class="food-grid">
+
+      {% for f in foods %}
+      <div class="card food-card">
+
+        <!-- FOOD IMAGE -->
+        <img src="/static/images/{{ f[1]|lower|replace(' ', '_') }}.jpg"
+             onerror="this.src='/static/images/default.jpg'"
+             alt="{{ f[1] }}">
+
+        <h3>{{ f[1] }}</h3>
+        <p>₹{{ f[2] }}</p>
+
+        <a class="btn" href="/add_to_cart/{{ f[1] }}/{{ f[2] }}">Add to Cart</a>
+
+      </div>
+      {% endfor %}
+
+    </div>
+
+  </div>
+
+</div>
+<!-- ================= AI ASSISTANT ================= -->
+<!-- ================= AI ASSISTANT ================= -->
+
+<script>
+window.FAV_FOOD = "{{ fav or '' }}";
+</script>
+
+<div id="ai-assistant">
+
+  <div id="ai-popup">
+
+    <div class="ai-header">
+      🤖 QuickBite AI
+      <span onclick="closeAI()">✖</span>
+    </div>
+
+    <div id="ai-messages"></div>
+
+    <div class="ai-input-box">
+      <input id="ai-input" placeholder="Ask something...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+
+  </div>
+
+  <div id="ai-icon" onclick="toggleAI()">🤖</div>
+
+</div>
+
+<script src="{{ url_for('static', filename='ai.js') }}"></script>
+
+</body>
+</html>

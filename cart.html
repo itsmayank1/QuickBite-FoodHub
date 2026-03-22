@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cart - {{ APP_NAME }}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">
+    <img src="/static/images/logo.png" class="logo">
+    <div>
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/orders">Orders</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+
+<div class="container">
+
+<h2 class="page-title">🛒 Your Cart</h2>
+
+{% if cart %}
+
+<div class="cart-layout">
+
+<!-- LEFT ITEMS -->
+<div class="cart-items">
+
+{% for food, item in cart.items() %}
+<div class="cart-card">
+
+  <img src="/static/images/{{ food|lower|replace(' ','_') }}.jpg"
+       onerror="this.src='/static/images/default.jpg'">
+
+  <div class="cart-info">
+    <h3>{{ food }}</h3>
+
+    <div class="cart-meta">
+      <span>₹{{ item.price }}</span>
+      <span>Qty: {{ item.qty }}</span>
+    </div>
+
+    <div class="subtotal">
+      Subtotal: ₹{{ item.price * item.qty }}
+    </div>
+
+    <a class="remove-btn" href="/remove_from_cart/{{ food }}">Remove</a>
+  </div>
+
+</div>
+{% endfor %}
+
+</div>
+
+
+<!-- RIGHT TOTAL -->
+<div class="cart-summary">
+
+<h3>Total</h3>
+
+<div class="total-price">
+₹{{ total }}
+</div>
+
+<a href="/checkout" class="checkout-btn">Proceed to Checkout</a>
+
+</div>
+
+</div>
+
+{% else %}
+<p class="empty-cart">Your cart is empty 🍔</p>
+{% endif %}
+
+</div>
+
+
+</body>
+</html>

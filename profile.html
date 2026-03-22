@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Profile</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">
+    <img src="/static/images/logo.png" class="logo">
+    <div class="brand-text">
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/orders">My Orders</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="profile-card">
+
+  <h2>👤 My Profile</h2>
+
+<div class="profile-info">
+    <p><b>Name:</b> {{ user[0] }}</p>
+    <p><b>Email:</b> {{ user[1] }}</p>
+
+    <div style="margin-top:10px;padding:12px;background:#f3f4f6;border-radius:10px;">
+        ⭐ Favourite Food: 
+        <b style="color:#2563eb">{{ favourite_food }}</b>
+    </div>
+</div>
+
+  <div class="wallet-card">
+    💰 Wallet Balance  
+    <span>₹{{ user[2] }}</span>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+
+    <div class="stat-box">
+      <h3>{{ total_orders }}</h3>
+      <p>Total Orders</p>
+    </div>
+
+    <div class="stat-box green">
+      <h3>{{ delivered_orders }}</h3>
+      <p>Delivered</p>
+    </div>
+
+    <div class="stat-box red">
+      <h3>{{ cancelled_orders }}</h3>
+      <p>Cancelled</p>
+    </div>
+
+    <div class="stat-box blue">
+      <h3>₹{{ total_spent }}</h3>
+      <p>Total Spent</p>
+    </div>
+
+  </div>
+
+  <div class="profile-actions">
+    <a href="/orders" class="btn-primary">🧾 View Orders</a>
+    <a href="/logout" class="btn-danger">Logout</a>
+  </div>
+
+</div>
+
+</div>
+
+
+</body>
+</html>

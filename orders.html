@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Orders</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <div class="brand">
+    <img src="/static/images/logo.png" class="logo">
+    <div class="brand-text">
+      <div class="site-name">{{ APP_NAME }}</div>
+      <div class="tagline">{{ TAGLINE }}</div>
+    </div>
+  </div>
+
+  <div class="nav-links">
+    <a href="/">Home</a>
+    <a href="/profile">Profile</a>
+    <a href="/logout">Logout</a>
+  </div>
+</div>
+
+<div class="container">
+
+<h2>🧾 My Orders</h2>
+
+<div class="wallet-box">
+💰 Wallet Balance: ₹{{ wallet_balance }}
+</div>
+
+{% for o in orders %}
+
+<div class="order-card-user">
+
+  <div class="order-top">
+    <h3>{{ o[2] }}</h3>
+    <span class="price">₹{{ o[3] }}</span>
+  </div>
+
+  <div class="order-info">
+    <p><b>Payment:</b> {{ o[4] }}</p>
+    <p><b>Time:</b> {{ o[6] }}</p>
+  </div>
+
+  <div class="status-row">
+
+    <span class="status 
+    {% if o[5]=='Delivered' %}green
+    {% elif o[5]=='Cancelled' %}red
+    {% else %}orange
+    {% endif %}
+    ">
+    {{ o[5] }}
+    </span>
+
+    {% if o[9] %}
+<span class="refund 
+{% if o[9]=='Refund Completed' %}green
+{% elif o[9]=='Refund Initiated' %}orange
+{% else %}gray
+{% endif %}
+">
+{{ o[9] }}
+</span>
+{% else %}
+<span class="refund gray">
+Not Applicable
+</span>
+{% endif %}
+
+  </div>
+
+  <div class="address-box">
+    📍 {{ o[12] }}  
+    📞 {{ o[13] }}
+  </div>
+
+  <!-- CANCEL BUTTON -->
+  {% if o[5] != 'Cancelled' and o[5] != 'Delivered' %}
+  <a href="/user/cancel_order/{{o[0]}}" class="cancel-btn">Cancel Order</a>
+  {% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+
+</body>
+</html>

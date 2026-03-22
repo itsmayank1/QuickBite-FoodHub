@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{{ APP_NAME }} |User Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="navbar">
+<div class="brand">
+  <img src="{{ url_for('static', filename='images/logo.png') }}"
+     class="logo"
+     alt="QuickBite Logo">
+  <div class="brand-text">
+    <span class="site-name">{{ APP_NAME }} - Login</span>
+    <span class="tagline">{{ TAGLINE }}</span>
+  </div>
+</div>
+<div class="container">
+
+<div class="container card">
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flash-success">
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% endwith %}
+
+  <h2>User Login</h2>
+
+  <form method="POST">
+    <input type="email" name="email" placeholder="Email" required>
+    <input type="password" name="password" placeholder="Password" required>
+    <button class="btn" type="submit">Login</button>
+  </form>
+
+  <p>New user? <a href="/signup">Signup</a></p>
+
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ APP_NAME }} | User Signup</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flash-success">
+      {% for msg in messages %}
+        <li>{{ msg }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+<h2>User Signup</h2>
+
+<form method="POST">
+    Name: <input type="text" name="name" required><br><br>
+    Email: <input type="email" name="email" required><br><br>
+    Password: <input type="password" name="password" required><br><br>
+    <button type="submit">Signup</button>
+</form>
+
+<p>Already have an account?
+<a href="/login">Login</a></p>
+</div>
+</body>
+</html>
